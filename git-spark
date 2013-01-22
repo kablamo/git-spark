@@ -1,5 +1,5 @@
 #!/bin/bash
-# Based on code by @trisweb featured here:
+# Based on @trisweb idea featured here:
 # http://github.com/holman/spark/wiki/Wicked-Cool-Usage 
 
 author=$USER
