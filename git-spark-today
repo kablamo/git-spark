@@ -1,0 +1,13 @@
+#!/bin/bash
+# Based on code by @trisweb featured here:
+# http://github.com/holman/spark/wiki/Wicked-Cool-Usage 
+
+author=$USER
+[ -n $1 ] && author=$1
+
+echo $author
+
+for day in $(seq 8 -1 0); do
+    git log --author=${author} --before="${day} days" --after="$[${day}+1] days" --format=oneline |
+    wc -l                                                                                                                                                      
+done | spark
