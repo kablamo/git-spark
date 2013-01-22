@@ -1,13 +1,57 @@
-#!/bin/bash
-# Based on @trisweb idea featured here:
+#!/usr/bin/env perl
+# Inspired by @trisweb's code on this wiki page:
 # http://github.com/holman/spark/wiki/Wicked-Cool-Usage 
 
-author=$USER
-[ -n $1 ] && author=$1
+use strict;
+use warnings;
 
-echo $author
+use Getopt::Long::Descriptive;
+use DateTime;
 
-for day in $(seq 8 -1 0); do
-    git log --author=${author} --before="${day} days" --after="$[${day}+1] days" --format=oneline |
-    wc -l                                                                                                                                                      
-done | spark
+my ($option, $usage) = describe_options(
+    'usage: git spark %o [AUTHOR]',
+    ['hours|o=i'      => 'commits from the last x hours'],
+    ['days|d=i'       => 'commits from the last x days'],
+    ['weeks|w=i'      => 'commits from the last x weeks'],
+    ['months|m=i'     => 'commits from the last x months'],
+    ['years|y=i'      => 'commits from the last x years'],
+    ['help|h'         => 'show this message'],
+);
+
+my $author = $ARGV[0] || $ENV{USER};
+
+print($usage), exit 0 if $option->{help};
+
+spark($author, $option->{hours},  'hours' ), exit 0 if $option->{hours};
+spark($author, $option->{days},   'days'  ), exit 0 if $option->{days};
+spark($author, $option->{weeks},  'weeks' ), exit 0 if $option->{weeks};
+spark($author, $option->{months}, 'months'), exit 0 if $option->{months};
+spark($author, $option->{years},  'years' ), exit 0 if $option->{years};
+
+print $usage;
+
+sub spark {
+    my ($author, $max, $units) = @_;
+    my $data = countCommits(@_);
+    print "Commits by $author over the last $max $units\n";
+    print `spark $data`;
+}
+
+sub countCommits {
+    my ($author, $max, $units) = @_;
+
+    my @commits;
+    foreach my $i (0..$max) {
+        my $cmd = "git log " .
+                  "--author=${author} " .
+                  "--before='${i} ${units}' " . 
+                  "--after='" . ($i + 1) . " ${units}' " .
+                  "--format=oneline | wc -l";
+        my $count = `$cmd`;
+        chomp($count);
+        push @commits, $count;
+    }
+
+    return join(" ", reverse @commits);
+}
+
