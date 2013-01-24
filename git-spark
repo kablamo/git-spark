@@ -34,6 +34,7 @@ sub spark {
     my ($author, $max, $units) = @_;
     my $data = countCommits(@_);
     print "Commits by $author over the last $max $units\n";
+    print "$data\n";
     print `spark $data`;
 }
 
