@@ -17,12 +17,12 @@ my ($option, $usage) = describe_options(
     ['weeks|w=i'      => 'Commits from the last x weeks'],
     ['months|m=i'     => 'Commits from the last x months'],
     ['years|y=i'      => 'Commits from the last x years'],
-    ['scale|s=i'      => 'The max value of the graph. Allows you to compare with other graphs.'],
+    ['scale|s=i'      => 'Max value of the graph. Use this option if you want to compare this graph with other graphs.'],
     ['help|h'         => 'Show this message'],
 );
 
 my $author = $ARGV[0] || $ENV{USER};
-my $max    = $option->{max} || 0;
+my $scale  = $option->{scale} || 0;
 
 print($usage), exit 0 if $option->{help};
 print($usage), exit 0 
@@ -33,26 +33,28 @@ print($usage), exit 0
         !$option->{years});
 
 foreach my $key (qw/hours days weeks months years/) {
-    spark($option->{$key}, $key, $author, $max ) if $option->{$key};
+    spark($option->{$key}, $key, $author, $scale) if $option->{$key};
 }
 
 sub spark {
-    my ($value, $units, $author) = @_;
+    my ($value, $units, $author, $scale) = @_;
 
     my @data  = countCommits(@_);
     my $total = sum @data;
     my $avg   = round($total / $#data);
     my $max   = max @data;
-    my $dataString = join " ", @data;
+
+    my $sparkArgs  = $scale ? join(" ", $scale, @data)     : join(" ", @data);
+    my $dataString = $scale ? join(" ", "[$scale]", @data) : join(" ", @data);
 
     print "Commits by $author over the last $value $units\n";
     print "total: $total   avg: $avg   max: $max\n";
     print "$dataString\n";
-    print `spark $dataString`;
+    print `spark $sparkArgs`;
 }
 
 sub countCommits {
-    my ($value, $units, $author, $max) = @_;
+    my ($value, $units, $author) = @_;
 
     my @commits;
     foreach my $i (0..($value - 1)) {
@@ -66,7 +68,6 @@ sub countCommits {
         push @commits, $count;
     }
 
-    push @commits, $max if $max;
     return reverse @commits;
 }
 
