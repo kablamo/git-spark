@@ -15,12 +15,12 @@ my ($option, $usage) = describe_options(
     ['weeks|w=i'      => 'commits from the last x weeks'],
     ['months|m=i'     => 'commits from the last x months'],
     ['years|y=i'      => 'commits from the last x years'],
-    ['max|m=i'        => 'max value.  used to scale graph. defaults to 50'],
+    ['max|m=i'        => 'add a value.  used to scale graph.'],
     ['help|h'         => 'show this message'],
 );
 
 my $author = $ARGV[0] || $ENV{USER};
-my $max    = $option->{max} || 50;
+my $max    = $option->{max} || 0;
 
 print($usage), exit 0 if $option->{help};
 print($usage), exit 0 
@@ -39,7 +39,7 @@ sub spark {
     my $data = countCommits(@_);
     print "Commits by $author over the last $value $units\n";
     print "$data\n";
-    print `spark $data 100`;
+    print `spark $data`;
 }
 
 sub countCommits {
@@ -57,6 +57,7 @@ sub countCommits {
         push @commits, $count;
     }
 
-    return join(" ", $max, reverse @commits);
+    push @commits, $max if $max;
+    return join(" ", reverse @commits);
 }
 
