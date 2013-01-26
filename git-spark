@@ -7,16 +7,18 @@ use warnings;
 
 use Getopt::Long::Descriptive;
 use DateTime;
+use List::AllUtils qw/max sum/;
+use Math::Round qw/round/;
 
 my ($option, $usage) = describe_options(
     'usage: git spark %o [AUTHOR]',
-    ['hours|o=i'      => 'commits from the last x hours'],
-    ['days|d=i'       => 'commits from the last x days'],
-    ['weeks|w=i'      => 'commits from the last x weeks'],
-    ['months|m=i'     => 'commits from the last x months'],
-    ['years|y=i'      => 'commits from the last x years'],
-    ['max|m=i'        => 'add a value.  used to scale graph.'],
-    ['help|h'         => 'show this message'],
+    ['hours|o=i'      => 'Commits from the last x hours'],
+    ['days|d=i'       => 'Commits from the last x days'],
+    ['weeks|w=i'      => 'Commits from the last x weeks'],
+    ['months|m=i'     => 'Commits from the last x months'],
+    ['years|y=i'      => 'Commits from the last x years'],
+    ['scale|s=i'      => 'The max value of the graph. Allows you to compare with other graphs.'],
+    ['help|h'         => 'Show this message'],
 );
 
 my $author = $ARGV[0] || $ENV{USER};
@@ -35,11 +37,18 @@ foreach my $key (qw/hours days weeks months years/) {
 }
 
 sub spark {
-    my ($value, $units, $author, $max) = @_;
-    my $data = countCommits(@_);
+    my ($value, $units, $author) = @_;
+
+    my @data  = countCommits(@_);
+    my $total = sum @data;
+    my $avg   = round($total / $#data);
+    my $max   = max @data;
+    my $dataString = join " ", @data;
+
     print "Commits by $author over the last $value $units\n";
-    print "$data\n";
-    print `spark $data`;
+    print "total: $total   avg: $avg   max: $max\n";
+    print "$dataString\n";
+    print `spark $dataString`;
 }
 
 sub countCommits {
@@ -58,6 +67,6 @@ sub countCommits {
     }
 
     push @commits, $max if $max;
-    return join(" ", reverse @commits);
+    return reverse @commits;
 }
 
