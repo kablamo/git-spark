@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# Inspired by @trisweb's code on this wiki page:
+# Inspired by @trisweb:
 # http://github.com/holman/spark/wiki/Wicked-Cool-Usage 
 
 use strict;
