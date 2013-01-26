@@ -15,34 +15,38 @@ my ($option, $usage) = describe_options(
     ['weeks|w=i'      => 'commits from the last x weeks'],
     ['months|m=i'     => 'commits from the last x months'],
     ['years|y=i'      => 'commits from the last x years'],
+    ['max|m=i'        => 'max value.  used to scale graph. defaults to 50'],
     ['help|h'         => 'show this message'],
 );
 
 my $author = $ARGV[0] || $ENV{USER};
+my $max    = $option->{max} || 50;
 
 print($usage), exit 0 if $option->{help};
+print($usage), exit 0 
+    if (!$option->{hours}  && 
+        !$option->{days}   && 
+        !$option->{weeks}  && 
+        !$option->{months} && 
+        !$option->{years});
 
-spark($author, $option->{hours},  'hours' ), exit 0 if $option->{hours};
-spark($author, $option->{days},   'days'  ), exit 0 if $option->{days};
-spark($author, $option->{weeks},  'weeks' ), exit 0 if $option->{weeks};
-spark($author, $option->{months}, 'months'), exit 0 if $option->{months};
-spark($author, $option->{years},  'years' ), exit 0 if $option->{years};
-
-print $usage;
+foreach my $key (qw/hours days weeks months years/) {
+    spark($option->{$key}, $key, $author, $max ) if $option->{$key};
+}
 
 sub spark {
-    my ($author, $max, $units) = @_;
+    my ($value, $units, $author, $max) = @_;
     my $data = countCommits(@_);
-    print "Commits by $author over the last $max $units\n";
+    print "Commits by $author over the last $value $units\n";
     print "$data\n";
-    print `spark $data`;
+    print `spark $data 100`;
 }
 
 sub countCommits {
-    my ($author, $max, $units) = @_;
+    my ($value, $units, $author, $max) = @_;
 
     my @commits;
-    foreach my $i (0..$max) {
+    foreach my $i (0..$value) {
         my $cmd = "git log " .
                   "--author=${author} " .
                   "--before='${i} ${units}' " . 
@@ -53,6 +57,6 @@ sub countCommits {
         push @commits, $count;
     }
 
-    return join(" ", reverse @commits);
+    return join(" ", $max, reverse @commits);
 }
 
