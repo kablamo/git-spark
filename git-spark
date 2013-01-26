@@ -17,7 +17,7 @@ my ($option, $usage) = describe_options(
     ['weeks|w=i'      => 'Commits from the last x weeks'],
     ['months|m=i'     => 'Commits from the last x months'],
     ['years|y=i'      => 'Commits from the last x years'],
-    ['scale|s=i'      => 'Max value of the graph. Use this option if you want to compare this graph with other graphs.'],
+    ['scale|s=i'      => 'Set the max value of the graph. Use this option to compare this graph with other graphs.'],
     ['help|h'         => 'Show this message'],
 );
 
