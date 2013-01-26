@@ -46,7 +46,7 @@ sub countCommits {
     my ($value, $units, $author, $max) = @_;
 
     my @commits;
-    foreach my $i (0..$value) {
+    foreach my $i (0..($value - 1)) {
         my $cmd = "git log " .
                   "--author=${author} " .
                   "--before='${i} ${units}' " . 
