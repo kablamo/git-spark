@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use Getopt::Long::Descriptive;
+use Encode qw/encode decode/;
 use DateTime;
 use List::AllUtils qw/max sum/;
 use Math::Round qw/round/;
@@ -44,13 +45,16 @@ sub spark {
     my $avg   = round($total / $#data);
     my $max   = max @data;
 
-    my $sparkArgs  = $scale ? join(" ", $scale, @data)     : join(" ", @data);
-    my $dataString = $scale ? join(" ", "[$scale]", @data) : join(" ", @data);
+    my $sparkArgs = $scale 
+        ? join(" ", $scale, 0, @data) 
+        : join(" ", @data);
 
     print "Commits by $author over the last $value $units\n";
     print "total: $total   avg: $avg   max: $max\n";
-    print "$dataString\n";
-    print `spark $sparkArgs`;
+    print join(" ", @data) . "\n";
+    my $out = `spark $sparkArgs`;
+    my $utf8out = decode('utf8', $out);
+    print encode('utf8', substr($utf8out, 2));
 }
 
 sub countCommits {
