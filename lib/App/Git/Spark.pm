@@ -40,6 +40,10 @@ read this short L<blog post|http://blog.kablamo.org/git-spark-revisited/>.
 
 =head1 INSTALLATION
 
+First, download spark and put it somewhere in your $PATH. (TODO: Include spark
+in this distro.)
+
+Next, install git-spark with cpanm.
 L<cpanm|https://metacpan.org/module/App::cpanminus> is the standard tool the
 Perl community uses to download and install Perl libraries from the
 L<CPAN|https://metacpan.org/>.  The following should get you up and running
