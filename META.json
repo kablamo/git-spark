@@ -1,0 +1,81 @@
+{
+   "abstract" : "Review the latest changes to a git repository",
+   "author" : [
+      "Eric Johnson <cpan at iijo dot nospamthanks dot org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300029, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "App-Git-Spark",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "examples",
+         "corpus"
+      ],
+      "package" : [
+         "DB"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.30"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Pod::Coverage::TrustPod" : "0",
+            "Test::CPAN::Meta" : "0",
+            "Test::Pod" : "1.41",
+            "Test::Pod::Coverage" : "1.08"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "DateTime" : "0",
+            "Encode" : "0",
+            "Getopt::Long::Descriptive" : "0",
+            "List::AllUtils" : "0",
+            "Math::Round" : "0",
+            "perl" : "5.006",
+            "strict" : "0",
+            "warnings" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "File::Find" : "0",
+            "File::Temp" : "0",
+            "Test::More" : "0"
+         }
+      }
+   },
+   "provides" : {
+      "App::Git::Spark" : {
+         "file" : "lib/App/Git/Spark.pm",
+         "version" : "0.001"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/kablamo/git-spark/issues"
+      },
+      "homepage" : "https://metacpan.org/release/App-Git-Spark",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/kablamo/git-spark.git",
+         "web" : "https://github.com/kablamo/git-spark"
+      }
+   },
+   "version" : "0.001"
+}
+
