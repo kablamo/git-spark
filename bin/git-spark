@@ -10,6 +10,9 @@ use Encode qw/encode decode/;
 use DateTime;
 use List::AllUtils qw/max sum/;
 use Math::Round qw/round/;
+    
+# VERSION
+# PODNAME: git-ribbon
 
 my ($option, $usage) = describe_options(
     'usage: git spark %o [AUTHOR]',
