@@ -61,7 +61,7 @@
    "provides" : {
       "App::Git::Spark" : {
          "file" : "lib/App/Git/Spark.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       }
    },
    "release_status" : "stable",
@@ -76,6 +76,6 @@
          "web" : "https://github.com/kablamo/git-spark"
       }
    },
-   "version" : "0.001"
+   "version" : "0.002"
 }
 
