@@ -1,5 +1,5 @@
 {
-   "abstract" : "Review the latest changes to a git repository",
+   "abstract" : "Plot your git commit history on the command line with sparklines",
    "author" : [
       "Eric Johnson <cpan at iijo dot nospamthanks dot org>"
    ],
@@ -61,7 +61,7 @@
    "provides" : {
       "App::Git::Spark" : {
          "file" : "lib/App/Git/Spark.pm",
-         "version" : "0.002"
+         "version" : "0.003"
       }
    },
    "release_status" : "stable",
@@ -76,6 +76,6 @@
          "web" : "https://github.com/kablamo/git-spark"
       }
    },
-   "version" : "0.002"
+   "version" : "0.003"
 }
 
