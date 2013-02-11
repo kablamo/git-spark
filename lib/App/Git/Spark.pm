@@ -2,7 +2,7 @@ package App::Git::Spark;
 
 # VERSION
 
-# ABSTRACT: Review the latest changes to a git repository
+# ABSTRACT: Plot your git commit history on the command line with sparklines
 
 =head1 SYNOPSIS
 
@@ -34,9 +34,28 @@ package App::Git::Spark;
 Plot your git commit history on the commandline with sparklines.  This is a
 mashup of git, L<spark|https://github.com/holman/spark>, and Perl.
 
-You only need to bother with --scale option if you want to compare the output
-from 2 different git-spark commands.  To better understand this option please
-read this short L<blog post|http://blog.kablamo.org/git-spark-revisited/>.
+=head1 COMPARING GRAPHS
+
+Unfortunately you often cannot compare `spark` output because the scaling is
+relative.  For example these two data series produce identical graphs
+despite have very different data.
+
+    ⚡ spark 1 2 3 4 5
+    ▁▂▄▆█
+    ⚡ spark 10 20 30 40 50
+    ▁▂▄▆█
+
+To solve this, you must put a max and a min in front of the data to get
+consistent scaling.  For example:
+
+    ⚡ spark 50 1 1 2 3 4 5
+    █▁▁▁▁▁▁
+    ⚡ spark 50 1 10 20 30 40 50
+    █▁▂▃▅▆█
+
+git-spark assumes the min is zero and users can pass in the max using
+the --scale option.  (Note that git-spark chops off the max/min characters from
+the output so this is all hidden behind the scenes.)
 
 =head1 INSTALLATION
 
