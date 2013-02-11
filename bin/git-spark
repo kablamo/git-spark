@@ -12,7 +12,7 @@ use List::AllUtils qw/max sum/;
 use Math::Round qw/round/;
     
 # VERSION
-# PODNAME: git-ribbon
+# PODNAME: git-spark
 
 my ($option, $usage) = describe_options(
     'usage: git spark %o [AUTHOR]',
