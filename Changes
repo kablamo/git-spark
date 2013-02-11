@@ -1,4 +1,8 @@
 
+0.004 2013.02.11 20:01:19 SGT
+    - POD: better install instructions
+    - Added a test to check for spark in $PATH
+
 0.003 2013.02.11 19:04:17 SGT
     - POD
 
