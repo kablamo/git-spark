@@ -26,18 +26,18 @@ my ($option, $usage) = describe_options(
 );
 
 my $author = $ARGV[0] || $ENV{USER};
-my $scale  = $option->{scale} || 0;
+my $scale  = $option->scale || 0;
 
-print($usage), exit 0 if $option->{help};
+print($usage), exit 0 if $option->help;
 print($usage), exit 0 
-    if (!$option->{hours}  && 
-        !$option->{days}   && 
-        !$option->{weeks}  && 
-        !$option->{months} && 
-        !$option->{years});
+    if (!$option->hours  && 
+        !$option->days   && 
+        !$option->weeks  && 
+        !$option->months && 
+        !$option->years);
 
 foreach my $key (qw/hours days weeks months years/) {
-    spark($option->{$key}, $key, $author, $scale) if $option->{$key};
+    spark($option->$key, $key, $author, $scale) if $option->$key;
 }
 
 sub spark {
