@@ -1,0 +1,75 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Getopt::Long::Descriptive;
+use DateTime;
+use List::AllUtils qw/max sum/;
+use Math::Round qw/round/;
+use Term::Vspark qw/show_graph/;
+    
+# VERSION
+# PODNAME: git-spark
+
+my ($option, $usage) = describe_options(
+    'usage: git vspark %o [AUTHOR]',
+    ['hours|o=i'      => 'Commits from the last x hours'],
+    ['days|d=i'       => 'Commits from the last x days'],
+    ['weeks|w=i'      => 'Commits from the last x weeks'],
+    ['months|m=i'     => 'Commits from the last x months'],
+    ['years|y=i'      => 'Commits from the last x years'],
+    ['scale|s=i'      => 'Set the max value of the graph. Use this option to compare this graph with other graphs.'],
+    ['help|h'         => 'Show this message'],
+);
+
+my $author = $ARGV[0] || $ENV{USER};
+my $scale  = $option->scale || 0;
+
+print($usage), exit 0 if $option->help;
+print($usage), exit 0 
+    if (!$option->hours  && 
+        !$option->days   && 
+        !$option->weeks  && 
+        !$option->months && 
+        !$option->years);
+
+foreach my $key (qw/hours days weeks months years/) {
+    vspark($option->$key, $key, $author, $scale) if $option->$key;
+}
+
+sub vspark {
+    my ($value, $units, $author, $scale) = @_;
+
+    my @data  = countCommits(@_);
+    my $total = sum @data;
+    my $avg   = round($total / $#data);
+    my $max   = max @data;
+
+    print "Commits by $author over the last $value $units\n";
+    print "total: $total   avg: $avg   max: $max\n";
+    Term::Vspark::show_graph(
+        max     => $scale ? $scale : $max,
+        columns => 80,
+        values  => \@data,
+    );
+}
+
+sub countCommits {
+    my ($value, $units, $author) = @_;
+
+    my @commits;
+    foreach my $i (0..($value - 1)) {
+        my $cmd = "git log " .
+                  "--author=${author} " .
+                  "--before='${i} ${units}' " . 
+                  "--after='" . ($i + 1) . " ${units}' " .
+                  "--format=oneline | wc -l";
+        my $count = `$cmd`;
+        chomp($count);
+        push @commits, $count;
+    }
+
+    return reverse @commits;
+}
+
