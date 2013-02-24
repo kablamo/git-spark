@@ -7,7 +7,7 @@ use Getopt::Long::Descriptive;
 use DateTime;
 use List::AllUtils qw/max sum/;
 use Math::Round qw/round/;
-use Term::Vspark qw/show_graph/;
+use Term::Vspark;
     
 # VERSION
 # PODNAME: git-spark
@@ -46,12 +46,14 @@ sub vspark {
     my $avg   = round($total / $#data);
     my $max   = max @data;
 
+    my %kvalues = map { $_ => $_ } @data;
+
     print "Commits by $author over the last $value $units\n";
     print "total: $total   avg: $avg   max: $max\n";
-    Term::Vspark::show_graph(
-        max     => $scale ? $scale : $max,
-        columns => 80,
-        values  => \@data,
+    print Term::Vspark::show_labeled_graph(
+        max      => $scale ? $scale : $max,
+        columns  => 80,
+        k_values => \%kvalues,
     );
 }
 
