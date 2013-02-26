@@ -10,6 +10,7 @@ use Encode qw/encode decode/;
 use DateTime;
 use List::AllUtils qw/max sum/;
 use Math::Round qw/round/;
+use Term::Spark;
     
 # VERSION
 # PODNAME: git-spark
@@ -43,21 +44,15 @@ foreach my $key (qw/hours days weeks months years/) {
 sub spark {
     my ($value, $units, $author, $scale) = @_;
 
-    my @data  = countCommits(@_);
-    my $total = sum @data;
-    my $avg   = round($total / $#data);
-    my $max   = max @data;
-
-    my $sparkArgs = $scale 
-        ? join(" ", $scale, 0, @data) 
-        : join(" ", @data);
+    my @data      = countCommits(@_);
+    my $total     = sum @data;
+    my $avg       = round($total / $#data);
+    my $max       = max @data;
 
     print "Commits by $author over the last $value $units\n";
     print "total: $total   avg: $avg   max: $max\n";
     print join(" ", @data) . "\n";
-    my $out = `spark $sparkArgs`;
-    my $utf8out = decode('utf8', $out);
-    print encode('utf8', substr($utf8out, 2));
+    print Term::Spark::show_graph( max => $max, values => \@data ), "\n";
 }
 
 sub countCommits {
