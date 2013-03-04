@@ -7,7 +7,9 @@ use Getopt::Long::Descriptive;
 use DateTime;
 use List::AllUtils qw/max sum/;
 use Math::Round qw/round/;
-use Term::Vspark;
+use Term::Vspark qw/show_labeled_graph/;
+
+binmode STDOUT, ':encoding(UTF-8)';
     
 # VERSION
 # PODNAME: git-spark
@@ -50,7 +52,7 @@ sub vspark {
 
     print "Commits by $author over the last $value $units\n";
     print "total: $total   avg: $avg   max: $max\n";
-    print Term::Vspark::show_labeled_graph(
+    print STDOUT show_labeled_graph(
         max      => $scale ? $scale : $max,
         columns  => 80,
         k_values => \%kvalues,
