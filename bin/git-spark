@@ -48,7 +48,7 @@ sub spark {
 
     my @data  = countCommits(@_);
     my $total = sum @data;
-    my $avg   = round($total / $#data);
+    my $avg   = round($total / ($#data + 1));
     my $max   = max @data;
 
     print "Commits by $author over the last $value $units\n";
