@@ -7,7 +7,7 @@ use Getopt::Long::Descriptive;
 use DateTime;
 use List::AllUtils qw/max sum/;
 use Math::Round qw/round/;
-use Term::Vspark qw/show_labeled_graph/;
+use Term::Vspark qw/show_graph/;
 
 binmode STDOUT, ':encoding(UTF-8)';
     
@@ -43,17 +43,18 @@ foreach my $key (qw/hours days weeks months years/) {
 sub vspark {
     my ($value, $units, $author, $scale) = @_;
 
-    my @kvalues = countCommits(@_);
-    my $total   = sum map { values %$_ } @kvalues;
-    my $avg     = round($total / scalar @kvalues);
-    my $max     = max map { values %$_ } @kvalues;
+    my @commits = countCommits(@_);
+    my $total   = sum @commits;
+    my $avg     = round($total / scalar @commits);
+    my $max     = max @commits;
 
     print "Commits by $author over the last $value $units\n";
     print "total: $total   avg: $avg   max: $max\n";
-    print STDOUT show_labeled_graph(
+    print STDOUT show_graph(
         max      => $scale ? $scale : $max,
         columns  => 80,
-        k_values => \@kvalues,
+        values   => \@commits,
+        labels   => \@commits,
     );
 }
 
@@ -69,10 +70,7 @@ sub countCommits {
                   "--format=oneline | wc -l";
         my $count = `$cmd`;
         chomp($count);
-
-        my $label = "$units $i: $count";
-
-        push @commits, { $label => $count };
+        push @commits, $count;
     }
 
     return @commits;
