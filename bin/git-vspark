@@ -52,7 +52,7 @@ sub vspark {
     print "total: $total   avg: $avg   max: $max\n";
     print STDOUT show_graph(
         max      => $scale ? $scale : $max,
-        columns  => 80,
+        columns  => 20,
         values   => \@commits,
         labels   => \@commits,
     );
