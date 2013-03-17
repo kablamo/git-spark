@@ -1,4 +1,10 @@
 
+0.005 2013.03.17 09:03:19 GMT
+    - git-vspark
+    - POD: new install instructions
+    - POD: introduce git-vspark
+    - Switch from homan's git implementation to Term::Spark
+
 0.004 2013.02.11 20:01:19 SGT
     - POD: better install instructions
 
