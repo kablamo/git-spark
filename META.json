@@ -4,7 +4,7 @@
       "Eric Johnson <cpan at iijo dot nospamthanks dot org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300029, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -45,6 +45,8 @@
             "Getopt::Long::Descriptive" : "0",
             "List::AllUtils" : "0",
             "Math::Round" : "0",
+            "Term::Spark" : "0",
+            "Term::Vspark" : "0",
             "perl" : "5.006",
             "strict" : "0",
             "warnings" : "0"
@@ -52,8 +54,11 @@
       },
       "test" : {
          "requires" : {
+            "ExtUtils::MakeMaker" : "0",
             "File::Find" : "0",
+            "File::Spec::Functions" : "0",
             "File::Temp" : "0",
+            "List::Util" : "0",
             "Test::More" : "0"
          }
       }
@@ -61,7 +66,7 @@
    "provides" : {
       "App::Git::Spark" : {
          "file" : "lib/App/Git/Spark.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       }
    },
    "release_status" : "stable",
@@ -76,6 +81,10 @@
          "web" : "https://github.com/kablamo/git-spark"
       }
    },
-   "version" : "0.004"
+   "version" : "0.005",
+   "x_contributors" : [
+      "Eric Johnson <eric.git@iijo.org>",
+      "Eric Johnson <github@iijo.org>"
+   ]
 }
 
