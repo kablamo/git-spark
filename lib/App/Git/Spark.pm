@@ -1,4 +1,5 @@
 package App::Git::Spark;
+use utf8;
 
 # VERSION
 
