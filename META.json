@@ -47,8 +47,9 @@
             "Math::Round" : "0",
             "Term::Spark" : "0",
             "Term::Vspark" : "0",
-            "perl" : "5.006",
+            "perl" : "5.008",
             "strict" : "0",
+            "utf8" : "0",
             "warnings" : "0"
          }
       },
@@ -66,7 +67,7 @@
    "provides" : {
       "App::Git::Spark" : {
          "file" : "lib/App/Git/Spark.pm",
-         "version" : "0.005"
+         "version" : "0.006"
       }
    },
    "release_status" : "stable",
@@ -81,10 +82,9 @@
          "web" : "https://github.com/kablamo/git-spark"
       }
    },
-   "version" : "0.005",
+   "version" : "0.006",
    "x_contributors" : [
-      "Eric Johnson <eric.git@iijo.org>",
-      "Eric Johnson <github@iijo.org>"
+      "Eric Johnson <eric.git@iijo.org>"
    ]
 }
 

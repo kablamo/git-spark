@@ -1,4 +1,7 @@
 
+0.006 2013.03.17 09:51:10 GMT
+    - Added 'use utf8' to App::Git::Spark
+
 0.005 2013.03.17 09:03:19 GMT
     - git-vspark
     - POD: new install instructions
