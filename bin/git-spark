@@ -17,6 +17,12 @@ binmode STDOUT, ':encoding(UTF-8)';
 # VERSION
 # PODNAME: git-spark
 
+=head1 DESCRIPTION
+
+See L<App::Git::Spark> for documentation.
+
+=cut
+
 my ($option, $usage) = describe_options(
     'usage: git spark %o [AUTHOR]',
     ['hours|o=i'      => 'Commits from the last x hours'],
