@@ -6,13 +6,13 @@ package App::Git::Spark;
 
 =head1 SYNOPSIS
 
-    ⚡ git spark --days 14 Stegosaurus
+    $ git spark --days 14 Stegosaurus
     Commits by Stegosaurus over the last 14 days
     total: 95   avg: 7   max: 23
     10 15 6 23 5 0 0 1 15 0 17 3 0 0
     ▄▅▂█▂▁▁▁▅▁▆▁▁▁
 
-    ⚡ git vspark --months 10 Triceratops
+    $ git vspark --months 10 Triceratops
     Commits by Triceratops over the last 10 months
     total: 263   avg: 26   max: 72
      12 ██▋
@@ -26,7 +26,7 @@ package App::Git::Spark;
      19 ████
      11 ██▍
 
-    ⚡ git spark -h
+    $ git spark -h
     usage: git spark [-dhmoswy] [long options...] [AUTHOR]
             -o --hours      Commits from the last x hours
             -d --days       Commits from the last x days
@@ -44,21 +44,21 @@ sparklines.
 
 =head1 COMPARING GRAPHS
 
-Unfortunately you often cannot compare graphs because the scaling is relative.
-For example these two data series produce identical graphs despite have very
-different data.
+Comparing graphs is often difficult because the scaling changes for different
+data sets.  For example these two data series produce identical graphs despite
+have very different data.
 
-    ⚡ spark 1 2 3 4 5
+    $ spark 1 2 3 4 5
     ▁▂▄▆█
-    ⚡ spark 10 20 30 40 50
+    $ spark 10 20 30 40 50
     ▁▂▄▆█
 
 To solve this, you must put a max and a min in front of the data to get
 consistent scaling.  For example:
 
-    ⚡ spark 50 1 1 2 3 4 5
+    $ spark 50 1 1 2 3 4 5
     █▁▁▁▁▁▁
-    ⚡ spark 50 1 10 20 30 40 50
+    $ spark 50 1 10 20 30 40 50
     █▁▂▃▅▆█
 
 git-spark assumes the min is zero and users can pass in the max using
@@ -69,11 +69,6 @@ The --scale option is also relavent to git-vspark.
 
 =head1 INSTALLATION
 
-First, download spark and put it somewhere in your $PATH. 
-
-    curl https://raw.github.com/holman/spark/master/spark > spark
-
-Next, install git-spark with cpanm.
 L<cpanm|https://metacpan.org/module/App::cpanminus> is the standard tool the
 Perl community uses to download and install Perl libraries from the
 L<CPAN|https://metacpan.org/>.  The following should get you up and running
