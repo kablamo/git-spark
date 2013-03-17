@@ -6,17 +6,25 @@ package App::Git::Spark;
 
 =head1 SYNOPSIS
 
-    ⚡ git spark --days 14 --scale 23 Stegosaurus
+    ⚡ git spark --days 14 Stegosaurus
     Commits by Stegosaurus over the last 14 days
     total: 95   avg: 7   max: 23
     10 15 6 23 5 0 0 1 15 0 17 3 0 0
     ▄▅▂█▂▁▁▁▅▁▆▁▁▁
 
-    ⚡ git spark --days 14 --scale 23 Triceratops
-    Commits by Triceratops over the last 14 days
-    total: 90   avg: 7   max: 22
-    1 12 3 11 3 0 0 6 16 3 13 22 0 0
-    ▁▄▁▄▁▁▁▂▅▁▄▇▁▁
+    ⚡ git vspark --months 10 Triceratops
+    Commits by Triceratops over the last 10 months
+    total: 263   avg: 26   max: 72
+     12 ██▋
+     18 ███▉
+     72 ███████████████▏
+     56 ███████████▊
+     16 ███▍
+     28 █████▉
+     12 ██▋
+     19 ████
+     19 ████
+     11 ██▍
 
     ⚡ git spark -h
     usage: git spark [-dhmoswy] [long options...] [AUTHOR]
@@ -31,14 +39,14 @@ package App::Git::Spark;
 
 =head1 DESCRIPTION
 
-Plot your git commit history on the commandline with sparklines.  This is a
-mashup of git, L<spark|https://github.com/holman/spark>, and Perl.
+Plot your git commit history on the commandline with sparklines and "vertical"
+sparklines.  
 
 =head1 COMPARING GRAPHS
 
-Unfortunately you often cannot compare `spark` output because the scaling is
-relative.  For example these two data series produce identical graphs
-despite have very different data.
+Unfortunately you often cannot compare graphs because the scaling is relative.
+For example these two data series produce identical graphs despite have very
+different data.
 
     ⚡ spark 1 2 3 4 5
     ▁▂▄▆█
@@ -57,6 +65,8 @@ git-spark assumes the min is zero and users can pass in the max using
 the --scale option.  (Note that git-spark chops off the max/min characters from
 the output so this is all hidden behind the scenes.)
 
+The --scale option is also relavent to git-vspark.
+
 =head1 INSTALLATION
 
 First, download spark and put it somewhere in your $PATH. 
@@ -71,5 +81,11 @@ quickly:
 
     curl -L http://cpanmin.us | perl - --sudo App::cpanminus
     cpanm App::Git::Spark
+
+=head1 SEE ALSO
+
+L<Term::Spark>
+
+L<Term::Vspark>
 
 =cut
